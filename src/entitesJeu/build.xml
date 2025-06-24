@@ -1,0 +1,28 @@
+<project name="entitesJeu-build" default="compile">
+
+    <target name="clean">
+        <delete dir="build"/>
+        <delete dir="dist"/>
+    </target>
+
+    <target name="copy-jar" depends="clean">
+        <mkdir dir="dist/lib"/>
+        <copy file="../outilsJeu/dist/outilsJeu.jar" tofile="dist/lib/outilsJeu.jar"/>
+    </target>
+
+    <target name="compile" depends="copy-jar">
+        <mkdir dir="build/classes"/>
+        <javac srcdir="src/entitesJeu" destdir="build/classes" includeantruntime="false">
+            <classpath>
+                <pathelement path="./dist/lib/outilsJeu.jar"/>
+            </classpath>
+        </javac>
+    </target>
+
+    <target name="jar" depends="compile">
+        <mkdir dir="dist"/>
+        <jar destfile="dist/entitesJeu.jar" basedir="build/classes/"/>
+    </target>
+
+    <target name="all" depends="jar"/>
+</project>

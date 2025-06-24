@@ -1,0 +1,21 @@
+<project name="outilsJeu-build" default="compile">
+
+    <target name="clean">
+        <delete dir="build"/>
+        <delete dir="dist"/>
+    </target>
+    
+    <target name="compile" depends="clean">
+        <mkdir dir="build/classes"/>
+        <javac srcdir="src/outilsJeu" destdir="build/classes" includeantruntime="false"/>
+    </target>
+
+
+    <target name="jar" depends="compile">
+        <mkdir dir="dist"/>
+        <jar destfile="dist/outilsJeu.jar" basedir="build/classes/"></jar>
+    </target>
+
+    <target name="all" depends="jar"/>
+
+</project>

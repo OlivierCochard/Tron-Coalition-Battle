@@ -1,0 +1,40 @@
+<project name="plateauJeu-build" default="compile">
+
+    <target name="clean">
+        <delete dir="build"/>
+        <delete dir="dist"/>
+    </target>
+
+    <target name="copy-jar" depends="clean">
+        <mkdir dir="dist/lib"/>
+        <copy file="../entitesJeu/dist/entitesJeu.jar" tofile="dist/lib/entitesJeu.jar"/>
+        <copy file="../outilsJeu/dist/outilsJeu.jar" tofile="dist/lib/outilsJeu.jar"/>
+    </target>
+
+    <target name="compile" depends="copy-jar">
+        <mkdir dir="build/classes"/>
+        <javac srcdir="src/plateauJeu" destdir="build/classes" includeantruntime="false">
+            <classpath>
+                <pathelement path="./dist/lib/entitesJeu.jar"/>
+                <pathelement path="./dist/lib/outilsJeu.jar"/>
+            </classpath>
+        </javac>
+    </target>
+
+    <target name="jar" depends="compile">
+        <mkdir dir="dist"/>
+        <jar destfile="dist/plateauJeu.jar" basedir="build/classes/"/>
+    </target>
+
+    <target name="all" depends="jar"/>
+
+    <target name="run" depends="all">
+        <java classname="plateauJeu.ClassePrincipale" fork="true">
+            <classpath>
+                <pathelement path="./build/classes"/>
+                <pathelement path="./dist/lib/entitesJeu.jar"/>
+                <pathelement path="./dist/lib/outilsJeu.jar"/>
+            </classpath>
+        </java>
+    </target>
+</project>

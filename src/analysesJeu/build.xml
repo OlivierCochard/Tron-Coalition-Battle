@@ -1,0 +1,67 @@
+<project name="analyseJeu-build" default="compile">
+
+    <target name="clean">
+        <delete dir="build"/>
+        <delete dir="dist"/>
+    </target>
+
+    <target name="copy-jar" depends="clean">
+        <mkdir dir="dist/lib"/>
+        <copy file="../outilsJeu/dist/outilsJeu.jar" tofile="dist/lib/outilsJeu.jar"/>
+        <copy file="../entitesJeu/dist/entitesJeu.jar" tofile="dist/lib/entitesJeu.jar"/>
+        <copy file="../plateauJeu/dist/plateauJeu.jar" tofile="dist/lib/plateauJeu.jar"/>
+    </target>
+
+    <target name="compile" depends="copy-jar">
+        <mkdir dir="build/classes"/>
+        <javac srcdir="src/analysesJeu" destdir="build/classes" includeantruntime="false">
+            <classpath>
+                <pathelement path="./dist/lib/outilsJeu.jar"/>
+                <pathelement path="./dist/lib/entitesJeu.jar"/>
+                <pathelement path="./dist/lib/plateauJeu.jar"/>
+            </classpath>
+        </javac>
+    </target>
+
+    <target name="jar" depends="compile">
+        <mkdir dir="dist"/>
+        <jar destfile="dist/analysesJeu.jar" basedir="build/classes/"/>
+    </target>
+
+    <target name="all" depends="jar"/>
+
+
+    <target name="runWinrate" depends="all">
+        <java classname="analysesJeu.AnalyseVictoire" fork="true">
+            <classpath>
+                <pathelement path="./build/classes"/>
+                <pathelement path="./dist/lib/entitesJeu.jar"/>
+                <pathelement path="./dist/lib/outilsJeu.jar"/>
+                <pathelement path="./dist/lib/plateauJeu.jar"/>
+            </classpath>
+        </java>
+    </target>
+
+    <target name="runTemps" depends="all">
+        <java classname="analyseJeu.AnalyseTemps" fork="true">
+            <classpath>
+                <pathelement path="./build/classes"/>
+                <pathelement path="./dist/lib/entitesJeu.jar"/>
+                <pathelement path="./dist/lib/outilsJeu.jar"/>
+                <pathelement path="./dist/lib/plateauJeu.jar"/>
+            </classpath>
+        </java>
+    </target>
+
+    <target name="runSurvie" depends="all">
+        <java classname="analyseJeu.AnalyseSurvie" fork="true">
+            <classpath>
+                <pathelement path="./build/classes"/>
+                <pathelement path="./dist/lib/entitesJeu.jar"/>
+                <pathelement path="./dist/lib/outilsJeu.jar"/>
+                <pathelement path="./dist/lib/plateauJeu.jar"/>
+            </classpath>
+        </java>
+    </target>
+
+</project>

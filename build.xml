@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="projet-Build" default="run">
+    <target name="compile">
+        <ant antfile="build.xml" dir="src/outilsJeu" target="jar"/>
+        <ant antfile="build.xml" dir="src/entitesJeu" target="jar"/>
+        <ant antfile="build.xml" dir="src/plateauJeu" target="jar"/>
+        <ant antfile="build.xml" dir="src/analysesJeu" target="jar"/>
+    </target>
+
+    <target name="javadoc" depends="compile">
+        <mkdir dir="doc"/>
+        <javadoc sourcepath="src" destdir="doc">
+            <fileset dir="src">
+                <include name="**/*.java"/>
+            </fileset>
+            <arg value="-author"/>
+            <arg value="-version"/>
+            <arg value="-encoding"/>
+            <arg value="UTF-8"/>
+            <arg value="-windowtitle"/>
+            <arg value="Jeu de tron documentation"/>
+            <arg value="-doctitle"/>
+            <arg value="Documentation de Projet 2"/>
+        </javadoc>
+    </target>
+
+    <target name="copy-ressources" depends="compile">
+        <mkdir dir="dist/lib"/>
+        <copy file="src/entitesJeu/dist/entitesJeu.jar" tofile="dist/lib/entitesJeu.jar"/>
+        <copy file="src/outilsJeu/dist/outilsJeu.jar" tofile="dist/lib/outilsJeu.jar"/>
+        <copy file="src/plateauJeu/dist/plateauJeu.jar" tofile="dist/lib/plateauJeu.jar"/>
+        <copy file="src/analysesJeu/dist/analysesJeu.jar" tofile="dist/lib/analysesJeu.jar"/>
+    </target>
+
+    <target name="jar" depends="copy-ressources">
+        <echo file="dist/lib/MANIFEST.MF">Main-Class: plateauJeu.ClassePrincipale</echo>
+        <jar destfile="dist/lib/ProjetJeu.jar" manifest="dist/lib/MANIFEST.MF">
+            <fileset dir="src/plateauJeu/build/classes"/>
+            <fileset dir="src/outilsJeu/build/classes"/>
+            <fileset dir="src/entitesJeu/build/classes"/>
+            <fileset dir="src/analysesJeu/build/classes"/>
+        </jar>
+
+        <echo file="dist/lib/MANIFEST.MF">Main-Class: analyseJeu.AnalyseVictoire</echo>
+        <jar destfile="dist/lib/ExperimentationWinrate.jar" manifest="dist/lib/MANIFEST.MF">
+            <fileset dir="src/plateauJeu/build/classes"/>
+            <fileset dir="src/outilsJeu/build/classes"/>
+            <fileset dir="src/entitesJeu/build/classes"/>
+            <fileset dir="src/analysesJeu/build/classes"/>
+        </jar>
+
+        <echo file="dist/lib/MANIFEST.MF">Main-Class: analyseJeu.AnalyseTemps</echo>
+        <jar destfile="dist/lib/ExperimentationTemps.jar" manifest="dist/lib/MANIFEST.MF">
+            <fileset dir="src/plateauJeu/build/classes"/>
+            <fileset dir="src/outilsJeu/build/classes"/>
+            <fileset dir="src/entitesJeu/build/classes"/>
+            <fileset dir="src/analysesJeu/build/classes"/>
+        </jar>
+
+        <echo file="dist/lib/MANIFEST.MF">Main-Class: analyseJeu.AnalyseSurvie</echo>
+        <jar destfile="dist/lib/ExperimentationSurvie.jar" manifest="dist/lib/MANIFEST.MF">
+            <fileset dir="src/plateauJeu/build/classes"/>
+            <fileset dir="src/outilsJeu/build/classes"/>
+            <fileset dir="src/entitesJeu/build/classes"/>
+            <fileset dir="src/analysesJeu/build/classes"/>
+        </jar>
+    </target>
+
+    <target name="run" depends="jar">
+        <java jar="dist/lib/ProjetJeu.jar" fork="true">
+            <classpath>
+                <pathelement path="dist/lib/entitesJeu.jar"/>
+                <pathelement path="dist/lib/outilsJeu.jar"/>
+                <pathelement path="dist/lib/combatJeu.jar"/>
+                <pathelement path="dist/lib/analysesJeu.jar"/>
+            </classpath>
+        </java>
+    </target>
+
+    <target name="runWinrate" depends="jar">
+        <java jar="dist/lib/ExperimentationWinrate.jar" fork="true">
+            <classpath>
+                <pathelement path="dist/lib/entitesJeu.jar"/>
+                <pathelement path="dist/lib/outilsJeu.jar"/>
+                <pathelement path="dist/lib/combatJeu.jar"/>
+                <pathelement path="dist/lib/analysesJeu.jar"/>
+            </classpath>
+        </java>
+    </target>
+    <target name="runTemps" depends="jar">
+        <java jar="dist/lib/ExperimentationTemps.jar" fork="true">
+            <classpath>
+                <pathelement path="dist/lib/entitesJeu.jar"/>
+                <pathelement path="dist/lib/outilsJeu.jar"/>
+                <pathelement path="dist/lib/combatJeu.jar"/>
+                <pathelement path="dist/lib/analysesJeu.jar"/>
+            </classpath>
+        </java>
+    </target>
+    <target name="runSurvie" depends="jar">
+        <java jar="dist/lib/ExperimentationSurvie.jar" fork="true">
+            <classpath>
+                <pathelement path="dist/lib/entitesJeu.jar"/>
+                <pathelement path="dist/lib/outilsJeu.jar"/>
+                <pathelement path="dist/lib/combatJeu.jar"/>
+                <pathelement path="dist/lib/analysesJeu.jar"/>
+            </classpath>
+        </java>
+    </target>
+
+
+
+</project>
