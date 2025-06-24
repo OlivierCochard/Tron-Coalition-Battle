@@ -6,10 +6,10 @@ $ ant [javadoc, runWinrate, runTemps, runSurvie, run]
 
 # Images
 <table>
-	<img src="images/games_4_1.png" width="100%"/>
+	<img src="images/game_4_1.png" width="100%"/>
   <tr>
-  	<td><img src="images/games_4_2.png" width="300"/></td>
-    <td><img src="images/games_4_3.png" width="300"/></td>
-    <td><img src="images/games_4_4.png" width="300"/></td>
+  	<td><img src="images/game_4_2.png" width="300"/></td>
+    <td><img src="images/game_4_3.png" width="300"/></td>
+    <td><img src="images/game_4_4.png" width="300"/></td>
   </tr>
 </table>
